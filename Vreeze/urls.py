@@ -1,8 +1,8 @@
 """
-URL configuration for Vreeze project.
+URL configuration for ioBro project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
+    https://docs.djangoproject.com/en/4.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -15,8 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework_simplejwt.views import TokenRefreshView, TokenBlacklistView, TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer
 
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
+    path("api/user/", include("user.urls")),
+]+ [
+    path("api/login/", CustomTokenObtainPairView.as_view()),
+    path("api/logout/", TokenBlacklistView.as_view()),
+    path("api/token/refresh/", TokenRefreshView.as_view()),
 ]

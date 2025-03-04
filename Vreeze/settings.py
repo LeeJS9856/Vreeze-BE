@@ -148,20 +148,27 @@ SIMPLE_JWT = {
 }
 
 # SOCIAL_AUTH 설정
-SOCIAL_AUTH_KAKAO_KEY = secret["KAKAO_KEY"]  # 카카오 앱 키 입력
-SOCIAL_AUTH_KAKAO_SECRET = secret["KAKAO_SECRET"]  # 카카오 앱 시크릿 키 입력
-SOCIAL_AUTH_KAKAO_SCOPE = ['profile_nickname']  # 요청할 정보 범위
-SOCIAL_AUTH_KAKAO_EXTRA_DATA = ['nickname']  # 받아올 추가 정보
+SOCIAL_AUTH_KAKAO_KEY = secret["KAKAO_KEY"]
+SOCIAL_AUTH_KAKAO_SECRET = secret["KAKAO_SECRET"]
+SOCIAL_AUTH_KAKAO_SCOPE = ['profile_nickname']
+SOCIAL_AUTH_KAKAO_EXTRA_DATA = ['nickname']
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = secret["GOOGLE_KEY"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = secret["GOOGLE_SECRET"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ["email", "profile"]
 
-# 로그인 후 리디렉션 URL 설정
-LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/auth/complete/kakao/'  # 로그인 후 리디렉션할 URL
+SOCIAL_AUTH_NAVER_KEY = secret["NAVER_KEY"]
+SOCIAL_AUTH_NAVER_SECRET = secret["NAVER_SECRET"]
+SOCIAL_AUTH_NAVER_SCOPE = ["email", "name", "profile_image"]
+SOCIAL_AUTH_NAVER_EXTRA_DATA = ["email", "name"]
 
-# 로그인 오류 시 리디렉션 URL 설정
+LOGIN_REDIRECT_URL = "http://127.0.0.1:8000/auth/complete/"
+
 LOGOUT_REDIRECT_URL = 'http://127.0.0.1:8000'
 
-# 추가적으로 필요한 설정들
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.kakao.KakaoOAuth2',
-    'django.contrib.auth.backends.ModelBackend',  # 기본 로그인 백엔드
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.naver.NaverOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )

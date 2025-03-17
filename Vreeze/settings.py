@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
 
+    'social_django',
+
     'user'
 ]
 
@@ -144,3 +146,29 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN":  True,
 }
+
+# SOCIAL_AUTH 설정
+SOCIAL_AUTH_KAKAO_KEY = secret["KAKAO_KEY"]
+SOCIAL_AUTH_KAKAO_SECRET = secret["KAKAO_SECRET"]
+SOCIAL_AUTH_KAKAO_SCOPE = ['profile_nickname']
+SOCIAL_AUTH_KAKAO_EXTRA_DATA = ['nickname']
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = secret["GOOGLE_KEY"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = secret["GOOGLE_SECRET"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ["email", "profile"]
+
+SOCIAL_AUTH_NAVER_KEY = secret["NAVER_KEY"]
+SOCIAL_AUTH_NAVER_SECRET = secret["NAVER_SECRET"]
+SOCIAL_AUTH_NAVER_SCOPE = ["email", "name", "profile_image"]
+SOCIAL_AUTH_NAVER_EXTRA_DATA = ["email", "name"]
+
+LOGIN_REDIRECT_URL = "http://127.0.0.1:8000/auth/complete/"
+
+LOGOUT_REDIRECT_URL = 'http://127.0.0.1:8000'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.kakao.KakaoOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.naver.NaverOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)

@@ -29,4 +29,5 @@ urlpatterns = [
     path("api/login/", CustomTokenObtainPairView.as_view()),
     path("api/logout/", TokenBlacklistView.as_view()),
     path("api/token/refresh/", TokenRefreshView.as_view()),
+    path('auth/', include('social_django.urls', namespace='social')),
 ]

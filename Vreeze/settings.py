@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'social_django',
 
     'user'
+    'voice'
+    'present'
+    'payment'
+    'chat'
 ]
 
 MIDDLEWARE = [

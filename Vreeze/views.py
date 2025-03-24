@@ -1,12 +1,8 @@
 import boto3
 from django.conf import settings
-from django.shortcuts import get_object_or_404
-from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.exceptions import PermissionDenied, AuthenticationFailed
 
-class RecordAPIView(APIView) :
+class S3APIView(APIView) :
     # S3 presignedUrl 생성하기
     def get(self, uuid, request):
         s3_client = boto3.client(

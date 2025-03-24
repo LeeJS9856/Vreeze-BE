@@ -24,10 +24,12 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     
 urlpatterns = [
     path('admin', admin.site.urls),
-    path("api/user/", include("user.urls")),
+    path("api/v1/user/", include("user.urls")),
+    path("api/v1/voice/", include("voice.urls")),
 ]+ [
     path("api/login/", CustomTokenObtainPairView.as_view()),
     path("api/logout/", TokenBlacklistView.as_view()),
     path("api/token/refresh/", TokenRefreshView.as_view()),
     path('auth/', include('social_django.urls', namespace='social')),
+    path('api/v1/s3/url/<str:uuid>', S3APIView.as_view()),
 ]

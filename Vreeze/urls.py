@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin', admin.site.urls),
     path("api/v1/user/", include("user.urls")),
     path("api/v1/voice/", include("voice.urls")),
+    path("api/v1/payment/", include("payment.urls")),
 ]+ [
     path("api/login/", CustomTokenObtainPairView.as_view()),
     path("api/logout/", TokenBlacklistView.as_view()),

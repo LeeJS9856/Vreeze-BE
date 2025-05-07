@@ -18,16 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView, TokenBlacklistView, TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer
+from . import views
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
     
 urlpatterns = [
     path('admin', admin.site.urls),
-    path("api/user/", include("user.urls")),
+    path("api/v1/user/", include("user.urls")),
+    path("api/v1/voice/", include("voice.urls")),
+    path("api/v1/payment/", include("payment.urls")),
+    path("api/v1/present/", include("present.urls")),
 ]+ [
     path("api/login/", CustomTokenObtainPairView.as_view()),
     path("api/logout/", TokenBlacklistView.as_view()),
     path("api/token/refresh/", TokenRefreshView.as_view()),
     path('auth/', include('social_django.urls', namespace='social')),
+    path('api/v1/s3/url/<str:uuid>', views.S3APIView.as_view()),
 ]

@@ -24,6 +24,8 @@ secret = json.load(open(BASE_DIR/"secrets.json"))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secret["DJANGO_SECRET_KEY"]
 
+OPENAI_API_KEY = secret["OPENAI_API_KEY"]
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -46,6 +48,10 @@ INSTALLED_APPS = [
     'social_django',
 
     'user'
+    'voice'
+    'present'
+    'payment'
+    'chat'
 ]
 
 MIDDLEWARE = [

@@ -34,5 +34,5 @@ urlpatterns = [
     path("api/logout/", TokenBlacklistView.as_view()),
     path("api/token/refresh/", TokenRefreshView.as_view()),
     path('auth/', include('social_django.urls', namespace='social')),
-    path('api/v1/s3/url/<str:uuid>', views.S3APIView.as_view()),
+    path('api/v1/s3/url/', views.S3APIView.as_view()),
 ]

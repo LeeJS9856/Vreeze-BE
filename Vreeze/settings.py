@@ -47,11 +47,12 @@ INSTALLED_APPS = [
 
     'social_django',
 
-    'user'
-    'voice'
-    'present'
-    'payment'
-    'chat'
+    'user',
+    'voice',
+    'present',
+    'payment',
+    'chat',
+    'Vreeze',  # 메인 앱 이름
 ]
 
 MIDDLEWARE = [
@@ -178,3 +179,10 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.naver.NaverOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+#s3 연결
+AWS_ACCESS_KEY_ID = secret["AWS_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = secret["AWS_SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = secret["AWS_STORAGE_BUCKET_NAME"]
+AWS_S3_REGION_NAME = secret["AWS_S3_REGION_NAME"]
+AWS_S3_SIGNATURE_VERSION = secret["AWS_S3_SIGNATURE_VERSION"]

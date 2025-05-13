@@ -1,25 +1,38 @@
-import boto3
-from django.conf import settings
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from utils.s3_connect import generate_presigned_url_for_upload, generate_presigned_url_for_download
 
-class S3APIView(APIView) :
-    # S3 presignedUrl 생성하기
-    def get(self, uuid, request):
-        s3_client = boto3.client(
-            "s3",
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            region_name=settings.AWS_REGION
+class S3APIView(APIView):
+    permission_classes = [AllowAny]
+    # S3 presignedUrl 생성하기 (업로드용)
+    def post(self, request):
+        file_name = request.data.get('file_name')
+        content_type = request.data.get('content_type')
+        
+        if not file_name or not content_type:
+            return Response(
+                {"error": "file_name과 content_type은 필수입니다."}, 
+                status=400
+            )
+            
+        url = generate_presigned_url_for_upload(
+            file_name=file_name,
+            file_type=content_type
         )
-
-        file_key = f"audio/{uuid}.aac"  # 저장된 S3 파일 경로
-
-        url = s3_client.generate_presigned_url(
-            "get_object",
-            Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": file_key},
-            ExpiresIn=3600,  # Presigned URL 만료 시간 (1시간)
-        )
-
-        return url
+        return Response({"presigned_url": url})
+    
+    # S3 presignedUrl 생성하기 (다운로드용)
+    def get(self, request):
+        file_name = request.query_params.get('file_name')
+        
+        if not file_name:
+            return Response(
+                {"error": "file_name은 필수입니다."}, 
+                status=400
+            )
+            
+        url = generate_presigned_url_for_download(file_name=file_name)
+        return Response({"presigned_url": url})
 
     
